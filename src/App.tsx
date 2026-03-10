@@ -96,10 +96,10 @@ const tools: ToolGroup[] = [
     color: "bg-purple-600 hover:bg-purple-700",
     links: [
         {
-        title: "Generate Image to video Prompt Affiliate Content",
+        title: "Generate Image to video Prompt Affiliate Content Generator V5.2",
         deskripsi:
           "Membuat dari foto produk menjadi Prompt ke Video AI  Username user Password user123",
-        url: "https://aistudio.google.com/apps/drive/1cJe4yfx6R73ypsmXWouMYxMmAEEEP0n9?fullscreenApplet=true&showPreview=true&showAssistant=true",
+        url: "https://ai.studio/apps/b626c1ba-6bde-4a7e-989d-4202a11ff8d2?fullscreenApplet=true",
         thumbnail: "https://images.unsplash.com/photo-1571101628768-6bae026844b6?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       },
       {
@@ -149,7 +149,7 @@ const tools: ToolGroup[] = [
         title: "Prompt Dooinize Part 3",
         deskripsi:
           "Final prompt untuk membuat konten affiliate yang lebih menarik.",
-        url: "https://gemini.google.com/share/f508b67f4c26",
+        url: "https://gemini.google.com/share/d56b4f81a515",
         thumbnail: "https://images.unsplash.com/photo-1611605698323-b1e99cfd37ea?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       },
     ],

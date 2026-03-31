@@ -73,13 +73,7 @@ function App() {
         </div>
 
         {/* TOOLS LISTING - CENTERED */}
-        <div className="max-w-6xl mx-auto">
-          {tools.map((tool, index) => (
-            <div key={index} className="mb-20 text-center">
-            
-            </div>
-          ))}
-        </div>
+        
 
         {/* TOOLS LISTING - CENTERED */}
         <div className="max-w-6xl mx-auto">

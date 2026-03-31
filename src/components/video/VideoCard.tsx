@@ -1,7 +1,7 @@
 import React from 'react';
 import { Play, Youtube } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { type VideoItem } from "../type";
+import { Card, CardContent } from "../ui/card";
+import { type VideoItem } from "../type/index";
 
 interface Props {
   video: VideoItem;

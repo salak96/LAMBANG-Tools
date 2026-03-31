@@ -1,13 +1,13 @@
-export interface VideoItem {
+export type VideoItem = {
   id: number;
   title: string;
   subtitle: string;
   date: string;
   thumbnail: string;
   duration: string;
-  category: string;
   url: string;
-}
+  category: string;
+};
 
 export interface LinkItem {
   title: string;

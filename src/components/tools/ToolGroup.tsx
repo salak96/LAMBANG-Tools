@@ -1,4 +1,4 @@
-import ToolCard from "./ToolCard";
+import { ToolCard } from "./ToolCard";
 
 export default function ToolGroup({ group }: any) {
   return (

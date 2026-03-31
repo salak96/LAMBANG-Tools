@@ -1,5 +1,5 @@
 import { Video } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "./components/ui/badge";
 import Footer from "./components/layout/Footer";
 import { videos } from "./components/data/videoData";
 import { VideoCard } from "./components/video/VideoCard";
@@ -76,7 +76,7 @@ function App() {
         <div className="max-w-6xl mx-auto">
           {tools.map((tool, index) => (
             <div key={index} className="mb-20 text-center">
-              {/* ... sisanya sama ... */}
+            
             </div>
           ))}
         </div>

@@ -2,14 +2,13 @@ import {
   Play,
   AlertCircle,
   Youtube,
-  BookOpen,
   Video,
   ExternalLink,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-
+import Footer from "./components/layout/Footer";
 /* =========================
    INTERFACES
 ========================= */
@@ -45,9 +44,7 @@ interface LinkItem {
   thumbnail: string;
 }
 
-/* =========================
-   VIDEO DATA
-========================= */
+
 
 const videos: VideoItem[] = [
   {
@@ -576,13 +573,7 @@ function App() {
       </main>
 
       {/* FOOTER */}
-
-      <footer className="border-t mt-16">
-        <div className="container mx-auto px-4 py-6 text-center text-sm text-muted-foreground">
-          © 2026 Pawang Affiliate Story Produk Generator
-        </div>
-      </footer>
-
+      <Footer />    
     </div>
   );
 }

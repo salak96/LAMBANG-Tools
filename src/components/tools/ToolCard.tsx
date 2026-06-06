@@ -1,6 +1,5 @@
 import { ExternalLink } from "lucide-react";
 
-// 1. Definisikan Interface agar tidak menggunakan 'any'
 interface ToolProps {
   tool: {
     url: string;
@@ -8,21 +7,19 @@ interface ToolProps {
     title: string;
     deskripsi: string;
   };
-  onOpen?: (url: string) => void; // Optional callback jika ingin handle klik di parent
+  onOpen: (url: string) => void;
 }
 
-export const ToolCard = ({ tool }: ToolProps) => {
+export const ToolCard = ({ tool, onOpen }: ToolProps) => {
   return (
-    <a 
-      href={tool.url} 
-      target="_blank" 
-      rel="noopener noreferrer" // 3. Tambahkan faktor keamanan untuk tab baru
-      className="block" // Agar seluruh area link bisa diklik dengan baik
+    <div
+      onClick={() => onOpen(tool.url)}
+      className="block cursor-pointer"
     >
       <div className="border rounded-xl overflow-hidden hover:shadow-lg transition bg-card">
         <img
           src={tool.thumbnail}
-          alt={tool.title} // Tambahkan alt text untuk aksesibilitas
+          alt={tool.title}
           className="h-40 w-full object-cover"
         />
 
@@ -38,6 +35,6 @@ export const ToolCard = ({ tool }: ToolProps) => {
           </div>
         </div>
       </div>
-    </a>
+    </div>
   );
 };

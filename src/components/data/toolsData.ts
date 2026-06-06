@@ -1,4 +1,5 @@
-import { type ToolGroup, type LinkItem } from "../type";
+
+import { type ToolGroup } from "../type";
 
 export const tools: ToolGroup[] = [
   {
@@ -106,8 +107,21 @@ export const tools: ToolGroup[] = [
     ],
   },
   {
-    name: "AI Video Generator",
-    description: "Tools AI untuk membuat video, prompt dan visual AI",
+    name: "CT AI Generator Pro",
+    description: "Tools AI untuk membuat konten video, prompt dan visual AI",
+    color: "bg-blue-600 hover:bg-blue-700",
+    links: [
+      {
+        title: "CT AI Generator Pro",
+        deskripsi: "Tools AI untuk membuat konten video, prompt dan visual AI.",
+        url: "https://gemini.google.com/share/70fbb4924676",
+        thumbnail: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      },
+    ],
+  },  
+  {
+    name: "Google Flow AI",
+    description: "Tool AI dari Google Labs untuk membuat video dan prompt visual otomatis.",
     color: "bg-green-600 hover:bg-green-700",
     links: [
         {
@@ -139,37 +153,8 @@ export const tools: ToolGroup[] = [
         "AI dari X (Elon Musk) untuk membuat prompt dan ide konten.",
       url: "https://grok.com/",
       thumbnail: "https://images.unsplash.com/photo-1717143587138-2532a35ce9b2?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    ],
-  },
-];
-
-export const soraTools: LinkItem[] = [
-  {
-    title: "Sora ChatGPT (Khusus Part 2)",
-    deskripsi: "Akses langsung Sora AI untuk generate video.",
-    url: "https://sora.chatgpt.com/explore",
-    thumbnail: "data:image/jpeg;base64,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",
-  },
-  {
-    title: "Online fliflik Sora Downloader",
-    deskripsi: "Download video Sora tanpa aplikasi tambahan.",
-    url: "https://online.fliflik.com/sora-video-downloader/",
-    thumbnail:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTshREhyJvCKUXdveNgnkLjTrjVUb9seUOCgA&s",
-  },
-  {
-    title: "Save Sora Videos",
-    deskripsi: "Downloader video Sora alternatif.",
-    url: "https://tutorial.teknoaiglobal.com/sorafree/",
-    thumbnail:
-      "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAM1BMVEX///+qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqlZtXlAAAAXklEQVR4nO3BMQEAAAgDoJvcf+FhQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgH8GQABi7A9sAAAAASUVORK5CYII=",
-  },
-  {
-    title: "Sora Video Downloader",
-    deskripsi: "Alat lain untuk mengunduh video Sora.",
-    url: "https://soravideodownloader.com/",
-    thumbnail:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTshREhyJvCKUXdveNgnkLjTrjVUb9seUOCgA&s",
-  }
+      
+    }
+  ]
+}
 ];

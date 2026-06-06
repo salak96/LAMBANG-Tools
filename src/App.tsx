@@ -1,17 +1,38 @@
-import { Video } from "lucide-react";
+import { useState } from "react";
+import { Video, LogIn, LogOut } from "lucide-react";
 import { Badge } from "./components/ui/badge";
+import { Button } from "./components/ui/button";
 import Footer from "./components/layout/Footer";
 import { videos } from "./components/data/videoData";
 import { VideoCard } from "./components/video/VideoCard";
 import { ToolCard } from "./components/tools/ToolCard";
 import { tools } from "./components/data/toolsData";
+import { AuthProvider, useAuth } from "./context/AuthContext";
+import { AuthModal } from "./components/auth/AuthModal";
 
-function App() {
-  const openLink = (url: string) => window.open(url, "_blank");
+function AppContent() {
+  const [authOpen, setAuthOpen] = useState(false);
+  const { user, loading, signOut, setPendingUrl } = useAuth();
+
+  const openWithAuth = (url: string) => {
+    if (!user) {
+      setPendingUrl(url);
+      setAuthOpen(true);
+      return;
+    }
+    window.open(url, "_blank");
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#09090b] flex items-center justify-center">
+        <div className="animate-spin h-8 w-8 border-4 border-purple-500 border-t-transparent rounded-full" />
+      </div>
+    );
+  }
 
   return (
-<div className="min-h-screen bg-[#09090b] text-zinc-100 font-sans">
-      {/* HEADER - Dibuat sejajar dengan konten bawah */}
+    <div className="min-h-screen bg-[#09090b] text-zinc-100 font-sans">
       <header className="sticky top-0 z-50 border-b border-zinc-800/50 bg-black/60 backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
           <div className="flex items-center gap-3">
@@ -23,10 +44,36 @@ function App() {
               <p className="text-[10px] text-zinc-500 mt-1 uppercase tracking-wider">Story Produk Generator</p>
             </div>
           </div>
-          
-          <Badge variant="outline" className="rounded-full bg-zinc-900/50 border-zinc-800 text-zinc-400 px-3 py-1 font-normal flex items-center gap-2">
-            <Video className="h-3.5 w-3.5" /> {videos.length} Video
-          </Badge>
+
+          <div className="flex items-center gap-3">
+            <Badge variant="outline" className="rounded-full bg-zinc-900/50 border-zinc-800 text-zinc-400 px-3 py-1 font-normal flex items-center gap-2">
+              <Video className="h-3.5 w-3.5" /> {videos.length} Video
+            </Badge>
+            {user ? (
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-zinc-400 hidden sm:block truncate max-w-[120px]">
+                  {user.email}
+                </span>
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  onClick={signOut}
+                  className="text-zinc-400 hover:text-white"
+                >
+                  <LogOut className="h-4 w-4" />
+                </Button>
+              </div>
+            ) : (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setAuthOpen(true)}
+                className="text-zinc-300 border-zinc-700 hover:bg-zinc-800"
+              >
+                <LogIn className="h-4 w-4 mr-1" /> Login
+              </Button>
+            )}
+          </div>
         </div>
       </header>
 
@@ -59,7 +106,7 @@ function App() {
         {/* VIDEO GRID - Sejajar sempurna dengan header dan footer */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {videos.map((video) => (
-            <VideoCard key={video.id} video={video} onOpen={openLink} />
+            <VideoCard key={video.id} video={video} onOpen={openWithAuth} />
           ))}
         </div>
 
@@ -72,10 +119,6 @@ function App() {
             </p>
         </div>
 
-        {/* TOOLS LISTING - CENTERED */}
-        
-
-        {/* TOOLS LISTING - CENTERED */}
         <div className="max-w-6xl mx-auto">
           {tools.map((tool, index) => (
             <div key={index} className="mb-20 text-center">
@@ -88,7 +131,7 @@ function App() {
                 {tool.links.map((link, i) => (
                   <div key={i} className="flex justify-center">
                     <div className="w-full max-w-sm text-left">
-                      <ToolCard tool={link} onOpen={openLink} />
+                      <ToolCard tool={link} onOpen={openWithAuth} />
                     </div>
                   </div>
                 ))}
@@ -99,7 +142,17 @@ function App() {
       </main>
 
       <Footer />
+
+      <AuthModal open={authOpen} onOpenChange={setAuthOpen} />
     </div>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
 

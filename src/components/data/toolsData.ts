@@ -30,6 +30,54 @@ export const tools: ToolGroup[] = [
         url: "https://gemini.google.com/share/f7145bcc8bf9",
         thumbnail: "https://images.unsplash.com/photo-1579109652910-99b9be06aaec?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       },
+      {
+        title: "Affiliate Content Generator V5.2",
+        deskripsi: "Tools AI Rahyan AI tambahan.",
+        url: "https://gemini.google.com/share/5479f3ae5f9e",
+        thumbnail: "https://oatmarketing.com/wp-content/uploads/2025/11/Top-10-AI-Tools-for-Affiliate-Marketers-768x512.png",
+      },
+      {
+        title: "Fakta Menarik",
+        deskripsi: "Tools AI untuk membuat konten fakta menarik secara otomatis.",
+        url: "https://gemini.google.com/share/1962cd03c997",
+        thumbnail: "https://animasistudio.com/wp-content/uploads/2019/01/WhatsApp-Image-2019-01-23-at-13.07.15.jpeg",
+      },
+      {
+        title: "Duplikasi Konten",
+        deskripsi: "Tools AI untuk menduplikasi dan mengoptimalkan konten.",
+        url: "https://gemini.google.com/share/6e3f4e925f91",
+        thumbnail: "https://www.toprankindonesia.com/wp-content/uploads/2025/04/apa-itu-duplikasi-content.webp",
+      },
+      {
+        title: "Fruit Script",
+        deskripsi: "Script untuk membuat konten buah secara otomatis.",
+        url: "https://drive.google.com/file/d/1C4ef3Ran-XXcOONVnPY0O7stVvalDEyd/view?usp=sharing",
+        thumbnail: "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      },
+      {
+        title: "Auto Clips",
+        deskripsi: "Tools untuk membuat klip video secara otomatis.",
+        url: "https://drive.google.com/file/d/17Zeg_zBJPZMoWbWVF2hJeHATA85k_Q1W/view",
+        thumbnail: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      },
+      {
+        title: "Motion Control",
+        deskripsi: "Tools untuk mengontrol animasi dan motion graphics.",
+        url: "https://drive.google.com/drive/folders/1daqRiw0rw_X9I3lDkPs_SAtylYHBcSfU",
+        thumbnail: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      },
+      {
+        title: "Tools Restorasi",
+        deskripsi: "Tools AI untuk restorasi gambar dan video.",
+        url: "https://aistudio.google.com/apps/drive/1TyWsIrEHBrqHHYjXhglrLnHn-UCi0Msv?fullscreenApplet=true&showPreview=true&showAssistant=true",
+        thumbnail: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      },
+      {
+        title: "Timelips",
+        deskripsi: "Tools AI untuk membuat efek timelips secara otomatis.",
+        url: "https://gemini.google.com/share/d9486a0d15d5",
+        thumbnail: "https://images.unsplash.com/photo-1492724441997-5dc865305da7?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      },
     ],
   },
   {
@@ -91,13 +139,6 @@ export const tools: ToolGroup[] = [
         "AI dari X (Elon Musk) untuk membuat prompt dan ide konten.",
       url: "https://grok.com/",
       thumbnail: "https://images.unsplash.com/photo-1717143587138-2532a35ce9b2?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      title: "Sora AI Explorer",
-      deskripsi:
-        "Explore video AI dari Sora OpenAI.",
-      url: "https://sora.chatgpt.com/explore",
-      thumbnail: "data:image/jpeg;base64,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",
     },
     ],
   },

@@ -148,7 +148,7 @@ export const tools: ToolGroup[] = [
 
     },
     {
-      title: "Grok AI",
+      title: "Grok AI (X)",
       deskripsi:
         "AI dari X (Elon Musk) untuk membuat prompt dan ide konten.",
       url: "https://grok.com/",

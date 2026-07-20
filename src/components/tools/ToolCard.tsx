@@ -7,10 +7,10 @@ interface ToolProps {
     title: string;
     deskripsi: string;
   };
-  onOpen: (url: string) => void;
+  onOpen?: (url: string) => void;
 }
 
-export const ToolCard = ({ tool, onOpen }: ToolProps) => {
+export const ToolCard = ({ tool, onOpen = (url: string) => window.open(url, '_blank') }: ToolProps) => {
   return (
     <div
       onClick={() => onOpen(tool.url)}

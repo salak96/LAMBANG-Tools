@@ -10,7 +10,7 @@ export default function ToolGroup({ group }: any) {
 
       <div className="grid md:grid-cols-3 gap-4">
         {group.links.map((tool: any, i: number) => (
-          <ToolCard key={i} tool={tool} />
+          <ToolCard key={i} tool={tool} onOpen={(url) => window.open(url, '_blank')} />
         ))}
       </div>
     </div>

@@ -1,35 +1,61 @@
-import { useState } from "react";
-import { Video, LogIn, LogOut } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import { Video, Shield, LogOut } from "lucide-react";
 import { Badge } from "./components/ui/badge";
 import { Button } from "./components/ui/button";
 import Footer from "./components/layout/Footer";
-import { videos } from "./components/data/videoData";
 import { VideoCard } from "./components/video/VideoCard";
 import { ToolCard } from "./components/tools/ToolCard";
-import { tools } from "./components/data/toolsData";
 import { AuthProvider, useAuth } from "./context/AuthContext";
-import { AuthModal } from "./components/auth/AuthModal";
+import { LoginModal } from "./components/auth/LoginModal";
+import { AdminPanel } from "./pages/AdminPanel";
 
-function AppContent() {
-  const [authOpen, setAuthOpen] = useState(false);
-  const { user, loading, signOut, setPendingUrl } = useAuth();
+const API = "http://localhost:3000/api";
 
-  const openWithAuth = (url: string) => {
-    if (!user) {
-      setPendingUrl(url);
-      setAuthOpen(true);
-      return;
+interface VideoItem {
+  id: number; title: string; subtitle: string; date: string; thumbnail: string; duration: string; url: string; category: string;
+}
+interface LinkItem { title: string; deskripsi: string; url: string; thumbnail: string; }
+interface ToolGroup { name: string; description: string; color?: string; links: LinkItem[]; }
+
+function HomePage() {
+  const { user, logout, pendingUrl, setPendingUrl } = useAuth();
+  const navigate = useNavigate();
+  const [loginOpen, setLoginOpen] = useState(false);
+  const [videos, setVideos] = useState<VideoItem[]>([]);
+  const [tools, setTools] = useState<ToolGroup[]>([]);
+
+  useEffect(() => {
+    fetch(`${API}/videos`).then(r => r.json()).then((data: any[]) => {
+      setVideos(data.map(v => ({
+        id: v.id, title: v.title, subtitle: v.subtitle || "",
+        date: v.date || "", thumbnail: v.thumbnail || "",
+        duration: v.duration || "", url: v.url, category: v.category || "",
+      })));
+    }).catch(() => {});
+    fetch(`${API}/tools/groups`).then(r => r.json()).then((data: any[]) => {
+      setTools(data.map((g: any) => ({
+        name: g.name, description: g.description || "",
+        color: g.color,
+        links: (g.links || []).map((l: any) => ({
+          title: l.title, deskripsi: l.deskripsi || "",
+          url: l.url, thumbnail: l.thumbnail || "",
+        })),
+      })));
+    }).catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    if (user && pendingUrl) {
+      window.open(pendingUrl, "_blank");
+      setPendingUrl(null);
     }
-    window.open(url, "_blank");
-  };
+  }, [user, pendingUrl, setPendingUrl]);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-[#09090b] flex items-center justify-center">
-        <div className="animate-spin h-8 w-8 border-4 border-purple-500 border-t-transparent rounded-full" />
-      </div>
-    );
-  }
+  const openLink = (url: string) => {
+    if (user) { window.open(url, "_blank"); }
+    else { setPendingUrl(url); setLoginOpen(true); }
+  };
 
   return (
     <div className="min-h-screen bg-[#09090b] text-zinc-100 font-sans">
@@ -44,94 +70,64 @@ function AppContent() {
               <p className="text-[10px] text-zinc-500 mt-1 uppercase tracking-wider">Story Produk Generator</p>
             </div>
           </div>
-
           <div className="flex items-center gap-3">
             <Badge variant="outline" className="rounded-full bg-zinc-900/50 border-zinc-800 text-zinc-400 px-3 py-1 font-normal flex items-center gap-2">
               <Video className="h-3.5 w-3.5" /> {videos.length} Video
             </Badge>
+            {user?.role === "admin" && (
+              <Button variant="ghost" size="icon-sm" onClick={() => navigate("/adminpanel")} className="text-zinc-400 hover:text-white">
+                <Shield className="h-4 w-4" />
+              </Button>
+            )}
             {user ? (
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-zinc-400 hidden sm:block truncate max-w-[120px]">
-                  {user.email}
-                </span>
-                <Button
-                  variant="ghost"
-                  size="icon-sm"
-                  onClick={signOut}
-                  className="text-zinc-400 hover:text-white"
-                >
-                  <LogOut className="h-4 w-4" />
-                </Button>
-              </div>
+              <Button variant="ghost" size="icon-sm" onClick={logout} className="text-zinc-400 hover:text-white">
+                <LogOut className="h-4 w-4" />
+              </Button>
             ) : (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setAuthOpen(true)}
-                className="text-zinc-300 border-zinc-700 hover:bg-zinc-800"
-              >
-                <LogIn className="h-4 w-4 mr-1" /> Login
+              <Button variant="outline" size="sm" onClick={() => setLoginOpen(true)} className="text-zinc-300 border-zinc-700 hover:bg-zinc-800">
+                Login
               </Button>
             )}
           </div>
         </div>
       </header>
 
-      {/* Gunakan max-w-6xl untuk membungkus semua konten utama agar sejajar */}
       <main className="max-w-6xl mx-auto px-4 py-12">
-        
-        {/* HERO SECTION */}
         <div className="text-center mb-16">
-          <span className="inline-block px-4 py-1 rounded-full text-[10px] font-bold tracking-[0.2em] text-white bg-gradient-to-r from-[#9333ea] to-[#db2777] mb-8">
-            MEMBER AREA
-          </span>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight text-white">
-            Selamat Datang di Member Area
-          </h2>
-          <p className="text-zinc-400 text-lg max-w-2xl mx-auto leading-relaxed">
-            Akses semua tutorial dan panduan untuk menggunakan Pawang Affiliate Story Produk Generator
-          </p>
+          <span className="inline-block px-4 py-1 rounded-full text-[10px] font-bold tracking-[0.2em] text-white bg-gradient-to-r from-[#9333ea] to-[#db2777] mb-8">MEMBER AREA</span>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight text-white">Selamat Datang di Member Area</h2>
+          <p className="text-zinc-400 text-lg max-w-2xl mx-auto leading-relaxed">Akses semua tutorial dan panduan untuk menggunakan Pawang Affiliate Story Produk Generator</p>
         </div>
 
-        {/* ALERT SECTION - Disesuaikan agar tidak terlalu lebar tapi tetap sejajar */}
         <div className="mb-12 border border-yellow-700/30 bg-yellow-900/10 rounded-2xl p-4 flex items-center justify-center gap-3 text-center">
-          <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-yellow-600/50 text-yellow-600 text-[10px] font-bold">
-            !
-          </div>
-          <p className="text-yellow-600/80 text-sm font-medium tracking-wide">
-            WAJIB TONTON semua video tutorial sebelum bertanya !!!
-          </p>
+          <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-yellow-600/50 text-yellow-600 text-[10px] font-bold">!</div>
+          <p className="text-yellow-600/80 text-sm font-medium tracking-wide">WAJIB TONTON semua video tutorial sebelum bertanya !!!</p>
         </div>
 
-        {/* VIDEO GRID - Sejajar sempurna dengan header dan footer */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {videos.map((video) => (
-            <VideoCard key={video.id} video={video} onOpen={openWithAuth} />
+            <VideoCard key={video.id} video={video} onOpen={openLink} />
           ))}
         </div>
 
-    {/* TOOLS SECTION - HEADER (SEJAJAR DENGAN KOTAK DI BAWAHNYA) */}
         <div className="mt-24 max-w-6xl mx-auto px-0 mb-12 text-left">
-            <h2 className="text-3xl font-bold text-white tracking-tight">TOOLS AI</h2>
-            <div className="h-1 w-12 bg-purple-500 mt-4 mb-4 rounded-full"></div>
-            <p className="text-zinc-500 text-sm max-w-md">
-              Kumpulan tools AI terbaik untuk membantu kamu membuat konten affiliate secara otomatis dan cepat.
-            </p>
+          <h2 className="text-3xl font-bold text-white tracking-tight">TOOLS AI</h2>
+          <div className="h-1 w-12 bg-purple-500 mt-4 mb-4 rounded-full"></div>
+          <p className="text-zinc-500 text-sm max-w-md">Kumpulan tools AI terbaik untuk membantu kamu membuat konten affiliate secara otomatis dan cepat.</p>
         </div>
 
         <div className="max-w-6xl mx-auto">
           {tools.map((tool, index) => (
             <div key={index} className="mb-20 text-center">
               <div className="mb-10">
-                  <h3 className="text-xl font-bold text-white mb-2">{tool.name}</h3>
-                  <p className="text-zinc-500 text-sm max-w-lg mx-auto">{tool.description}</p>
+                <h3 className="text-xl font-bold text-white mb-2">{tool.name}</h3>
+                <p className="text-zinc-500 text-sm max-w-lg mx-auto">{tool.description}</p>
               </div>
-              
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-center">
                 {tool.links.map((link, i) => (
                   <div key={i} className="flex justify-center">
                     <div className="w-full max-w-sm text-left">
-                      <ToolCard tool={link} onOpen={openWithAuth} />
+                      <ToolCard tool={link} onOpen={openLink} />
                     </div>
                   </div>
                 ))}
@@ -140,10 +136,8 @@ function AppContent() {
           ))}
         </div>
       </main>
-
       <Footer />
-
-      <AuthModal open={authOpen} onOpenChange={setAuthOpen} />
+      <LoginModal open={loginOpen} onClose={() => { setLoginOpen(false); setPendingUrl(null); }} />
     </div>
   );
 }
@@ -151,7 +145,10 @@ function AppContent() {
 function App() {
   return (
     <AuthProvider>
-      <AppContent />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/adminpanel" element={<AdminPanel />} />
+      </Routes>
     </AuthProvider>
   );
 }

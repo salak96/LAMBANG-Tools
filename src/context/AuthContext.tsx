@@ -1,58 +1,81 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
-import { supabase } from "../lib/supabase";
-import type { User } from "@supabase/supabase-js";
+
+interface User {
+  id: number;
+  email: string;
+  role: string;
+}
 
 interface AuthContextType {
   user: User | null;
-  loading: boolean;
-  signIn: (email: string, password: string) => Promise<{ error?: string }>;
-  signOut: () => Promise<void>;
+  token: string | null;
+  login: (email: string, password: string) => Promise<string | null>;
+  logout: () => void;
+  register: (email: string, password: string) => Promise<string | null>;
   pendingUrl: string | null;
   setPendingUrl: (url: string | null) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+const API = "http://localhost:3000/api/auth";
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [token, setToken] = useState<string | null>(null);
   const [pendingUrl, setPendingUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      setLoading(false);
-    }).catch(() => setLoading(false));
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      setUser(session?.user ?? null);
-      if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
-        window.location.hash = "";
-      }
-    });
-
-    return () => subscription.unsubscribe();
+    const saved = localStorage.getItem("token");
+    if (saved) {
+      setToken(saved);
+      fetch(`${API}/me`, { headers: { Authorization: `Bearer ${saved}` } })
+        .then((r) => r.json())
+        .then((d) => { if (d.user) setUser(d.user); })
+        .catch(() => localStorage.removeItem("token"));
+    }
   }, []);
 
-  const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) return { error: error.message };
-    return {};
+  const login = async (email: string, password: string): Promise<string | null> => {
+    const res = await fetch(`${API}/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await res.json();
+    if (!res.ok) return data.error || "Login failed";
+    localStorage.setItem("token", data.token);
+    setToken(data.token);
+    setUser(data.user);
+    return null;
   };
 
-  const signOut = async () => {
-    await supabase.auth.signOut();
+  const logout = () => {
+    localStorage.removeItem("token");
+    setToken(null);
+    setUser(null);
+  };
+
+  const register = async (email: string, password: string): Promise<string | null> => {
+    const res = await fetch(`${API}/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await res.json();
+    if (!res.ok) return data.error || "Register failed";
+    return null;
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signIn, signOut, pendingUrl, setPendingUrl }}>
+    <AuthContext.Provider value={{ user, token, login, logout, register, pendingUrl, setPendingUrl }}>
       {children}
     </AuthContext.Provider>
   );
 }
 
 export function useAuth() {
-  const context = useContext(AuthContext);
-  if (!context) throw new Error("useAuth must be used within AuthProvider");
-  return context;
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw new Error("useAuth must be used within AuthProvider");
+  return ctx;
 }

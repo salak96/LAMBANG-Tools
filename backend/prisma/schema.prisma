@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  role      String   @default("user")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Video {
+  id        Int      @id @default(autoincrement())
+  title     String
+  subtitle  String?
+  date      String?
+  thumbnail String? @db.Text
+  duration  String?
+  url       String @db.Text
+  category  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ToolGroup {
+  id          Int        @id @default(autoincrement())
+  name        String
+  description String?
+  color       String?
+  links       ToolLink[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model ToolLink {
+  id        Int       @id @default(autoincrement())
+  title     String
+  deskripsi String?
+  url       String @db.Text
+  thumbnail String? @db.Text
+  groupId   Int
+  group     ToolGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}

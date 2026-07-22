@@ -23,9 +23,9 @@ model Video {
   title     String
   subtitle  String?
   date      String?
-  thumbnail String? @db.Text
+  thumbnail String?
   duration  String?
-  url       String @db.Text
+  url       String
   category  String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

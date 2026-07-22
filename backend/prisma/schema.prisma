@@ -14,6 +14,8 @@ model User {
   role      String   @default("user")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("user")
 }
 
 model Video {
@@ -27,6 +29,8 @@ model Video {
   category  String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("video")
 }
 
 model ToolGroup {
@@ -37,6 +41,8 @@ model ToolGroup {
   links       ToolLink[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+
+  @@map("toolgroup")
 }
 
 model ToolLink {
@@ -49,4 +55,6 @@ model ToolLink {
   group     ToolGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+
+  @@map("toollink")
 }

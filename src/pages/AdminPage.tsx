@@ -12,7 +12,7 @@ export function AdminPage({ onBack }: { onBack?: () => void }) {
   const [users, setUsers] = useState<{ id: number; email: string; role: string; createdAt: string }[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/auth/users", {
+    fetch(`${import.meta.env.VITE_API_URL}/auth/users`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     })
       .then((r) => r.json())
@@ -31,7 +31,7 @@ export function AdminPage({ onBack }: { onBack?: () => void }) {
       setSuccess(`User ${email} berhasil didaftarkan`);
       setEmail("");
       setPassword("");
-      const res = await fetch("http://localhost:3000/api/auth/users", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/users`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       const data = await res.json();

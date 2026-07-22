@@ -10,7 +10,7 @@ import { AuthProvider, useAuth } from "./context/AuthContext";
 import { LoginModal } from "./components/auth/LoginModal";
 import { AdminPanel } from "./pages/AdminPanel";
 
-const API = "http://localhost:3000/api";
+const API = import.meta.env.VITE_API_URL;
 
 interface VideoItem {
   id: number; title: string; subtitle: string; date: string; thumbnail: string; duration: string; url: string; category: string;

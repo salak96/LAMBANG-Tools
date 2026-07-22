@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Pencil, Trash2, Save, X, Eye, EyeOff } from "lucide-react";
 
 type Tab = "videos" | "tools" | "users";
-const API = "http://localhost:3000/api";
+const API = import.meta.env.VITE_API_URL;
 
 interface Video {
   id: number; title: string; subtitle?: string; date?: string;

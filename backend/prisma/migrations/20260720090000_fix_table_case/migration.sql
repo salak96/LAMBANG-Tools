@@ -1,2 +1,2 @@
--- Rename Video to video to match @@map("video") in schema
-RENAME TABLE `Video` TO `video`;
+-- Table names are created in lowercase in the preceding migration to match
+-- @@map declarations and remain compatible with case-sensitive Linux hosts.

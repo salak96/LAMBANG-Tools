@@ -17,7 +17,10 @@ async function seedVideos() {
   const count = await prisma.video.count();
   if (count > 0) return;
   for (const v of videoData) {
-    await prisma.video.create({ data: v });
+    const thumbnail = v.thumbnail.startsWith("data:")
+      ? null
+      : v.thumbnail.split("?")[0].slice(0, 191);
+    await prisma.video.create({ data: { ...v, thumbnail } });
   }
   console.log(`Seeded ${videoData.length} videos`);
 }

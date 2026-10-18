@@ -8,7 +8,7 @@
 DROP TABLE `tool`;
 
 -- CreateTable
-CREATE TABLE `Video` (
+CREATE TABLE `video` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `title` VARCHAR(191) NOT NULL,
     `subtitle` VARCHAR(191) NULL,
@@ -24,7 +24,7 @@ CREATE TABLE `Video` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `ToolGroup` (
+CREATE TABLE `toolgroup` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NOT NULL,
     `description` VARCHAR(191) NULL,
@@ -36,7 +36,7 @@ CREATE TABLE `ToolGroup` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `ToolLink` (
+CREATE TABLE `toollink` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `title` VARCHAR(191) NOT NULL,
     `deskripsi` VARCHAR(191) NULL,
@@ -50,4 +50,4 @@ CREATE TABLE `ToolLink` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `ToolLink` ADD CONSTRAINT `ToolLink_groupId_fkey` FOREIGN KEY (`groupId`) REFERENCES `ToolGroup`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `toollink` ADD CONSTRAINT `toollink_groupId_fkey` FOREIGN KEY (`groupId`) REFERENCES `toolgroup`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

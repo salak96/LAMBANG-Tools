@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE `User` (
+CREATE TABLE `user` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `email` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NULL,
@@ -11,7 +11,7 @@ CREATE TABLE `User` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `Tool` (
+CREATE TABLE `tool` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `title` VARCHAR(191) NOT NULL,
     `description` VARCHAR(191) NULL,
